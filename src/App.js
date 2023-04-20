@@ -1,26 +1,17 @@
-import Headers from './component/LAYERS/Headers'
-import Meals from './component/MEALS/Meals'
-import Cart from './component/CART/Cart'
-import { useState } from 'react'
-import CartProvider from './Store/CartProvider'
-
+import { Fragment } from 'react'
+import Counter from './components/Counter'
+import Header from './components/Header'
+import Auth from './components/Auth'
+import Profile from './components/UserProfile'
+import { useSelector } from 'react-redux'
 function App() {
-  const [show, setShow] = useState(false)
-  const CloseCart = () => {
-    setShow(false)
-  }
-  const OpenCart = () => {
-    setShow(true)
-  }
-
+  const isLogin = useSelector((state) => state.auth.isLogin)
   return (
-    <CartProvider>
-      {show ? <Cart CloseCart={CloseCart} /> : ''}
-      <Headers OpenCart={OpenCart} />
-      <main>
-        <Meals />
-      </main>
-    </CartProvider>
+    <Fragment>
+      <Header />
+      {isLogin ? <Profile /> : <Auth />}
+      <Counter />
+    </Fragment>
   )
 }
 
